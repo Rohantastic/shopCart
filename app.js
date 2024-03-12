@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const UserModel = require('./models/userModel');
 const cartModel = require('./models/cartModel');
