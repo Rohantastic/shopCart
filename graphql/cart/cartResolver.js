@@ -37,7 +37,6 @@ const resolvers = {
   },
   Mutation: {
     addToCart: async (_, { productID }, decodedToken) => {
-      console.log("decodedToken---->", decodedToken);
       try {
         if (!decodedToken || Object.keys(decodedToken).length === 0) {
           throw new Error('User not authorized!');
