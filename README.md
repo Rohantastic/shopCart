@@ -22,21 +22,36 @@ JWT_SECRET_KEY=secret_key
 ```
 
 4. Ensure you have a MySQL server running, and update the database configuration in database.js if necessary.
-5. Ensure redis server is running !
-6. Ensure rabbitMQ server is running !
-7. Start the server
+## Ensure redis server is running !
+
+## Ensure rabbitMQ server is running !
+
+**To install RabbitMQ on localhost:**
+
+- Visit the [RabbitMQ Download page](https://www.rabbitmq.com/download.html) and follow the instructions for your operating system.
+
+- Once installed, RabbitMQ should be accessible at `http://localhost:15672`. The default username is `guest`, and the default password is also `guest`. You can access the RabbitMQ management UI using these credentials.
+ 
+5. Start the server
+
+
 ```
 npm start
 ```
 ## The server should now be running on http://localhost:3000/graphql.
 
 # Features
+
 ## Authentication
 1. Signup: Allows users to create an account with a unique email address.
 2. Login: Allows users to authenticate with their email and password.
+
+
 ## Products
 1. Add Product: Allows admins to add new products with name, description, and price.
 2. Get Products: Retrieves a list of all products available.
+
+
 ## Cart Management
 1. Add to Cart: Allows authenticated users to add products to their cart.
 2. Get Carts: Retrieves the items in the user's cart.
@@ -46,15 +61,15 @@ npm start
 
 ## OrderedItem 
 1. Ordered item gets stored into DB through RabbitMQ
-2. 
+
 ### Project Structure:
 ```
 app.js: Entry point for the application.
-controllers/: Contains controller functions for handling business logic.
-graphql/: Contains GraphQL schema, resolvers, and typedefs for defining API operations.
-models/: Defines Sequelize models for database tables.
+controllers: Contains controller functions for handling business logic.
+graphql: Contains GraphQL schema, resolvers, and typedefs for defining API operations.
+models: Defines Sequelize models for database tables.
 configuration/database.js: Configures the database connection.
-routes/: Contains route definitions (not used in GraphQL setup).
+rabbitMQ: Contains message queue configuration
 README.md: Project documentation.
 ```
 
@@ -68,6 +83,7 @@ bcrypt: Hashing passwords for secure storage.
 dotenv: Loading environment variables from .env file.
 ioredis: Redis client for caching.
 amqplib: RabbitMQ library
+jest: Unit testing
 ```
 
 
