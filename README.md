@@ -40,6 +40,32 @@ npm start
 ```
 ## The server should now be running on http://localhost:3000/graphql.
 
+
+# Endpoints:->
+## Using GraphQL for User Authentication and Ordering Products
+### Signing Up and Logging In
+ - Sign Up: Users must sign up to create an account.
+ - Log In: After signing up, users log in using their credentials.
+ - JWT Token: Upon successful login, users receive a JWT token.
+
+ ### Accessing Product Information
+ - Add a product: User can add products by going to mutation{ AddProduct{ } }
+ - Accessing Products: Navigate to query getProducts to retrieve product information.
+ - Product ID: Take note of the productID of the desired product.
+
+ ### Adding Products to Cart
+ - Setting JWT Token: Include the JWT token in the header
+ - Endpoint: Navigate to mutation addToCart.
+ - Passing Product ID: Send the productID as part of the request body.
+ - Cart ID: Upon successful addition, you will receive a cartID
+
+ ### Ordering a Product
+ - Ordering Endpoint: Proceed to mutation orderAProduct{}.
+ - Passing Cart ID: Include the cartID of the desired product in the request.
+
+ ### RabbitMQ
+ - Backend Process: Upon request, the backend will send a message queue through RabbitMQ and create an orderedItem data in the orderedItem table.
+
 # Features
 
 ## Authentication
