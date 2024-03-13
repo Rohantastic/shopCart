@@ -1,33 +1,40 @@
 const amqp = require('amqplib');
+const orderedItemModel = require('../models/orderedItemsModel');
 
 async function consumeOrders() {
     try {
-        // Connect to RabbitMQ server
-        const connection = await amqp.connect('amqp://localhost');
-        
-        // Create a channel
+
+        const connection = await amqp.connect('amqp://localhost:5672');
+
+
         const channel = await connection.createChannel();
-        
-        // Declare the queue from which we'll consume messages
+
+
         const queue = 'orderQueue';
         await channel.assertQueue(queue, { durable: true });
 
-        // Define function to handle incoming messages
-        function handleIncomingMessage(msg) {
+
+        async function handleIncomingMessage(msg) {
             const order = JSON.parse(msg.content.toString());
             console.log("Received order from RabbitMQ:", order);
+            const response = await orderedItemModel.create({
+                orderedItemID: order.orderID,
+                userName: order.userName,
+                productName: order.productName,
+                productDescription: order.productDescription,
+                productPrice: order.productPrice
 
-            // Process the order here (e.g., update database, send email confirmation, etc.)
+            });
         }
-
-        // Consume messages from the queue
         channel.consume(queue, handleIncomingMessage, { noAck: true });
-
-        console.log("Consumer started. Waiting for orders...");
     } catch (error) {
         console.error("Error setting up RabbitMQ consumer:", error);
         throw error;
     }
-}
+};
 
-consumeOrders().catch(console.error);
+
+//consumeOrders();
+
+
+module.exports = { consumeOrders }

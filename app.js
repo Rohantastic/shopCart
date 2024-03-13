@@ -6,12 +6,14 @@ const UserModel = require('./models/userModel');
 const cartModel = require('./models/cartModel');
 const productsModel = require('./models/productsModel');
 const orderModel = require('./models/orderModel');
+const orderedItemModel = require('./models/orderedItemsModel');
 const {ApolloServer} = require('apollo-server-express');
 const schema = require('./graphql/schema');
 const flushAll = require('./redis/flushAll');
 require('dotenv').config();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+
 
 UserModel.hasMany(cartModel, { foreignKey: 'userID' });
 cartModel.belongsTo(UserModel, { foreignKey: 'userID' });

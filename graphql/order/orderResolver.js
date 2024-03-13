@@ -19,6 +19,7 @@ const resolvers = {
         
         const order = await createOrder(cartID, decodedToken);
         await redis.set(`order:${cartID}`, JSON.stringify(order));
+        //consumeOrders().catch(()=>console.error());
         console.log('Order stored in cache');
     
         return order;
