@@ -10,6 +10,8 @@ This is a backend API for an e-commerce platform, built with Node.js, Express.js
 git clone https://github.com/rohantastic/shopCart.git
 ```
 
+#### make sure to create a database named `ecom` or change the database name, and configure configuration/database.js file for mySQL.
+
 2. Install dependencies:
 ```
 npm install
