@@ -15,7 +15,7 @@ const resolvers = {
 
         const products = await getProducts();
 
-        await redis.set('products', JSON.stringify(products));
+        await redis.setex('products', 10, JSON.stringify(products)); 
         console.log('Products stored in cache');
 
         return products;

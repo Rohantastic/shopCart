@@ -22,8 +22,8 @@ async function consumeOrders() {
                 userName: order.userName,
                 productName: order.productName,
                 productDescription: order.productDescription,
-                productPrice: order.productPrice
-
+                productPrice: order.productPrice,
+                userID: order.userID
             });
         }
         channel.consume(queue, handleIncomingMessage, { noAck: true });

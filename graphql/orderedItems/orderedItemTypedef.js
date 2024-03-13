@@ -1,17 +1,17 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type Order {
+  type OrderedItems {
+    orderedItemID : ID!
+    userID :ID!
     userName: String!
     productName: String!
     productDescription: String!
-    productPrice:String!
-    userID: ID!
-    productID: ID!
+    productPrice: String!
   }
- 
-  type Mutation {
-    orderAProduct(cartID: Int!): Order
+
+  type Query {
+    getOrderedItems: [OrderedItems]
   }
 `;
 

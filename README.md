@@ -65,6 +65,10 @@ npm start
  - Ordering Endpoint: Proceed to mutation orderAProduct{}.
  - Passing Cart ID: Include the cartID of the desired product in the request.
 
+ ### Fetching Ordered Products
+ - User can fetch their ordered products by quering query{getOrderedItems}
+ - make sure to provide jwt token
+
  ### RabbitMQ
  - Backend Process: Upon request, the backend will send a message queue through RabbitMQ and create an orderedItem data in the orderedItem table.
 
@@ -88,7 +92,8 @@ npm start
 1. Order a Product: Allows users to place an order for the items in their cart.
 
 ## OrderedItem 
-1. Ordered item gets stored into DB through RabbitMQ
+1. getOrderedItems: User can fetch their ordered products by quering query{getOrderedItems}
+2. Ordered item gets stored into DB through RabbitMQ
 
 ### Project Structure:
 ```
@@ -98,6 +103,8 @@ graphql: Contains GraphQL schema, resolvers, and typedefs for defining API opera
 models: Defines Sequelize models for database tables.
 configuration/database.js: Configures the database connection.
 rabbitMQ: Contains message queue configuration
+tests: contains jest tests
+redis: contains redis flushAll to flush redis store
 README.md: Project documentation.
 ```
 

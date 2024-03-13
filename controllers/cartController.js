@@ -48,7 +48,7 @@ const getCarts = async (decodedToken) => {
 
     const products = await productModel.findAll({
       where: { productID: productIDs },
-      attributes: ['productID', 'name', 'price']
+      attributes: ['productID', 'name', 'price','description']
     });
 
     const arrayOfCartItems = cartItems.map(cartItem => {

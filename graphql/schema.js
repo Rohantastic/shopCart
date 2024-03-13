@@ -9,11 +9,13 @@ const cartTypedef = require('./cart/cartTypedef');
 const cartResolver = require('./cart/cartResolver');
 const orderTypedef = require('./order/orderTypedef');
 const orderResolver = require('./order/orderResolver');
+const orderedItemTypedef = require('./orderedItems/orderedItemTypedef');
+const orderedItemResolver = require('./orderedItems/orderedItemResolver');
 
 
 const schema = makeExecutableSchema({ 
-    typeDefs : [signupTypedef,productTypedef,loginTypedef,cartTypedef,orderTypedef],
-    resolvers: [signupResolvers,productResolver,loginResolvers,cartResolver,orderResolver]
+    typeDefs : [signupTypedef,productTypedef,loginTypedef,cartTypedef,orderTypedef,orderedItemTypedef],
+    resolvers: [signupResolvers,productResolver,loginResolvers,cartResolver,orderResolver,orderedItemResolver]
  });
 
 module.exports = schema;

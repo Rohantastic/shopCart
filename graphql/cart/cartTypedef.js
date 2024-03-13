@@ -5,6 +5,7 @@ const typeDefs = gql`
     productID: ID!
     name: String!
     price: Int!
+    description: String!
   }
 
   type CartItem {

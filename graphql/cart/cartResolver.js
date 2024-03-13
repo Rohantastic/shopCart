@@ -29,18 +29,17 @@ const resolvers = {
           product: {
             productID: cart.product.productID,
             name: cart.product.name,
-            price: cart.product.price
+            price: cart.product.price,
+            description: cart.product.description
           }
         }));
-
-        console.log('cartResolver->>>', cartItems);
         await redis.setex(cartKey, 10, JSON.stringify(cartItems));
         console.log('Cart stored in redis memory');
 
         return cartItems;
       } catch (e) {
         console.error(e);
-        throw new Error('Failed to get carts');
+        throw new Error('user not authorised or cart is empty!');
       }
     }
   },

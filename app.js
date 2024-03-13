@@ -14,6 +14,7 @@ require('dotenv').config();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
+//flushAll;
 
 UserModel.hasMany(cartModel, { foreignKey: 'userID' });
 cartModel.belongsTo(UserModel, { foreignKey: 'userID' });
@@ -25,6 +26,9 @@ orderModel.belongsTo(UserModel, {foreignKey : 'userID'});
 orderModel.belongsTo(cartModel,{foreignKey: 'cartID'});
 cartModel.hasMany(orderModel, {foreignKey: 'cartID'});
 
+UserModel.hasMany(orderedItemModel,{foreignKey:'userID'});
+orderedItemModel.belongsTo(UserModel,{foreignKey:'userID'});
+
 
 const startServer = async () => {
     const server = new ApolloServer({ schema,
@@ -32,7 +36,6 @@ const startServer = async () => {
       const {authorization} = req.headers;
       if(authorization){
         const decodedToken = jwt.verify(authorization,process.env.JWT_SECRET_KEY);
-        
         return decodedToken;
       }
     }
