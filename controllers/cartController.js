@@ -6,6 +6,11 @@ const addToCart = async (productID, decodedToken) => {
   try {
     const user = await userModel.findOne({ email: decodedToken.email });
     if (user) {
+      const product = await productModel.findOne({ productID });
+      if (!product) {
+        throw new Error("Product does not exist");
+      }
+
       const userID = user.userID;
       const response = await cartModel.create({ userID, productID });
       return {
@@ -13,12 +18,12 @@ const addToCart = async (productID, decodedToken) => {
         userID: response.userID,
         productID: response.productID
       }
-
     }
   } catch (e) {
     console.log(e);
   }
 };
+
 
 const getCarts = async (decodedToken) => {
   if (!decodedToken) {

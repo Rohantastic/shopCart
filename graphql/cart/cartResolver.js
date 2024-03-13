@@ -53,7 +53,7 @@ const resolvers = {
         return await addToCart(productID, decodedToken);
       } catch (e) {
         console.error(e);
-        throw new Error('Failed to add product to cart');
+        throw new Error('Failed to add product to cart, user might not be authorised!');
       }
     }
   }

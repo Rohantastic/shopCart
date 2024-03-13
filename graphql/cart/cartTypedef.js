@@ -12,12 +12,16 @@ const typeDefs = gql`
     product: Product!
   }
 
+  type Cart{
+    cartID: ID!
+  }
+
   type Query {
     getCarts: [CartItem]!
   }
 
   type Mutation {
-    addToCart(productID: Int!): CartItem
+    addToCart(productID: Int!): Cart
   }
 `;
 
