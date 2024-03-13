@@ -24,11 +24,10 @@ const resolvers = {
         return order;
       } catch (e) {
         console.error(e);
-        throw new Error('Failed to create order');
+        return Error('User is not authorised!'); 
       }
     }
-    
-  },
+  }
 };
 
 module.exports = resolvers;

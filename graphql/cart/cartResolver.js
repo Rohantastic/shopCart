@@ -7,7 +7,11 @@ const resolvers = {
   Query: {
     getCarts: async (_, __, decodedToken) => {
       try {
-        if (decodedToken) {
+        if (!decodedToken || Object.keys(decodedToken).length === 0) {
+          throw new Error('User not authorized!');
+        }
+
+        else if (decodedToken) {
 
           const cartKey = `cart:${decodedToken.userId}`;
 
@@ -31,7 +35,7 @@ const resolvers = {
         }
       } catch (e) {
         console.error(e);
-        throw new Error('Failed to get carts');
+        throw new Error('User not Authorized, Failed to get carts');
       }
     }
   },
@@ -41,15 +45,15 @@ const resolvers = {
         if (!decodedToken || Object.keys(decodedToken).length === 0) {
           throw new Error('User not authorized!');
         }
-        
+
         return await addToCart(productID, decodedToken);
       } catch (e) {
         console.error(e);
         throw new Error('Failed to add product to cart');
       }
     }
-    
-    
+
+
   }
 };
 
