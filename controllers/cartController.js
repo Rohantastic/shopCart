@@ -53,7 +53,7 @@ const getCarts = async (decodedToken) => {
         product: product.dataValues
       };
     });
-  
+
     return arrayOfCartItems;
   } catch (error) {
     console.error('Error in getCarts:', error);

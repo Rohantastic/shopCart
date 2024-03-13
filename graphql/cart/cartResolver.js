@@ -7,35 +7,40 @@ const resolvers = {
   Query: {
     getCarts: async (_, __, decodedToken) => {
       try {
-        if (!decodedToken || Object.keys(decodedToken).length === 0) {
-          throw new Error('User not authorized!');
+        if (!decodedToken || !decodedToken.email) {
+          throw new Error('User not authorized or token missing userId!');
         }
 
-        else if (decodedToken) {
+        const cartKey = `cart:${decodedToken.userId}`;
+        const cachedCart = await redis.get(cartKey);
 
-          const cartKey = `cart:${decodedToken.userId}`;
+        if (cachedCart) {
+          console.log('Cart retrieved from redis memory');
+          return JSON.parse(cachedCart);
+        }
 
+        const carts = await getCarts(decodedToken);
 
-          const cachedCart = await redis.get(cartKey);
-          if (cachedCart) {
-            console.log('Cart retrieved from redis memory');
-            return JSON.parse(cachedCart);
+        if (!carts || carts.length === 0) {
+          throw new Error('No carts found for the user!');
+        }
+        const cartItems = carts.map(cart => ({
+          cartID: cart.cartID,
+          product: {
+            productID: cart.product.productID,
+            name: cart.product.name,
+            price: cart.product.price
           }
+        }));
 
+        console.log('cartResolver->>>', cartItems);
+        await redis.setex(cartKey, 10, JSON.stringify(cartItems));
+        console.log('Cart stored in redis memory');
 
-          const carts = await getCarts(decodedToken);
-
-
-          await redis.set(cartKey, JSON.stringify(carts));
-          console.log('Cart stored in redis memory');
-
-          return carts;
-        } else {
-          throw new Error('User not authorized!');
-        }
+        return cartItems;
       } catch (e) {
         console.error(e);
-        throw new Error('User not Authorized, Failed to get carts');
+        throw new Error('Failed to get carts');
       }
     }
   },
@@ -45,15 +50,12 @@ const resolvers = {
         if (!decodedToken || Object.keys(decodedToken).length === 0) {
           throw new Error('User not authorized!');
         }
-
         return await addToCart(productID, decodedToken);
       } catch (e) {
         console.error(e);
         throw new Error('Failed to add product to cart');
       }
     }
-
-
   }
 };
 

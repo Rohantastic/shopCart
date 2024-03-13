@@ -2,8 +2,9 @@ const orderModel = require('../models/orderModel');
 const cartModel = require('../models/cartModel');
 const productsModel = require('../models/productsModel');
 const userModel = require('../models/userModel');
+const { setupRabbitMQ } = require('../rabbitMQ/rabbitmq');
 
-const createOrder = async (cartId,decodedToken) => {
+const createOrder = async (cartId, decodedToken) => {
     const cartID = cartId;
     const email = decodedToken.email;
 
@@ -46,15 +47,18 @@ const createOrder = async (cartId,decodedToken) => {
 
         if (result) {
             const cartRemoved = await cartModel.destroy({ where: { cartID } });
+            //const { channel, queue } = await setupRabbitMQ();
+            //channel.sendToQueue(queue, Buffer.from(JSON.stringify(result)));
+            console.log("Sent order to message queue i.e rabbitMQ:", result);
         }
 
-        return{
+        return {
             orderID: result.orderID,
-            userName:result.userName,
-            productName:result.productName,
-            productDescription:result.productDescription,
+            userName: result.userName,
+            productName: result.productName,
+            productDescription: result.productDescription,
             productPrice: result.productPrice
-        }
+        };
     } catch (e) {
         console.error(e);
         throw new Error(e);
