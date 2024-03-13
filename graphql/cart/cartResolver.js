@@ -18,7 +18,7 @@ const resolvers = {
 
           const cachedCart = await redis.get(cartKey);
           if (cachedCart) {
-            console.log('Cart retrieved from cache');
+            console.log('Cart retrieved from redis memory');
             return JSON.parse(cachedCart);
           }
 
@@ -27,7 +27,7 @@ const resolvers = {
 
 
           await redis.set(cartKey, JSON.stringify(carts));
-          console.log('Cart stored in cache');
+          console.log('Cart stored in redis memory');
 
           return carts;
         } else {

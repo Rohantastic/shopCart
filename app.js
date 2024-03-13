@@ -8,6 +8,7 @@ const productsModel = require('./models/productsModel');
 const orderModel = require('./models/orderModel');
 const {ApolloServer} = require('apollo-server-express');
 const schema = require('./graphql/schema');
+require('dotenv').config();
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -28,9 +29,8 @@ const startServer = async () => {
     const server = new ApolloServer({ schema,
     context:({req})=>{
       const {authorization} = req.headers;
-      //console.log("authorizaiton=",authorization);
       if(authorization){
-        const decodedToken = jwt.verify(authorization,'r2874269875v93h7593kwfvgerbiuygerbiuvtygbewivgteriutvgb3iu5ybvg4ivb6uy');
+        const decodedToken = jwt.verify(authorization,process.env.JWT_SECRET_KEY);
         
         return decodedToken;
       }
